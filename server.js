@@ -12,6 +12,15 @@ const authRoutes = require('./routes/auth');
 const app = express();
 const port = process.env.PORT || 4000;
 
+app.use(cors({
+  origin: [
+    'http://localhost:4200',
+    'https://online-spare-parts-frontend.onrender.com'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
+
 // MongoDB Connection
 const mongodbURL = process.env.MONGODB_URL || 'mongodb+srv://sumanbera03_db_user:RGjhKHPCREK2uqnO@cluster0.oiedcz1.mongodb.net/?appName=Cluster0';
 
@@ -26,10 +35,6 @@ mongoose.connect(mongodbURL, {
     console.error('MongoDB connection error:', err);
     process.exit(1);
   });
-
-app.use(cors({
-  origin: 'https://online-spare-parts-frontend.onrender.com',
-}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
